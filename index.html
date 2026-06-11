@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Formulario de Relleno - Catálogo Taekwondo Toros</title>
+  <style>
+    :root {
+      --primary: #0d6efd;
+      --secondary: #1f2937;
+      --accent: #f59e0b;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #dbe4ee;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #07111f, #13253b 60%, #0c2741);
+      color: var(--text);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 16px 56px;
+    }
+
+    .hero {
+      background: rgba(255,255,255,0.95);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      color: var(--secondary);
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.96);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.16);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.05rem;
+      color: var(--secondary);
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 8px;
+    }
+
+    .panel p.subtle {
+      margin-top: 0;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    form { display: block; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    label {
+      font-weight: 700;
+      color: var(--secondary);
+      font-size: 0.95rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font: inherit;
+      background: #fff;
+      color: var(--text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.14);
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    .inline-fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .list-panel {
+      margin-top: 18px;
+    }
+
+    .product-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .product-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      background: #f8fbff;
+      display: grid;
+      gap: 6px;
+    }
+
+    .product-card strong {
+      color: var(--secondary);
+      font-size: 1rem;
+    }
+
+    .product-meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .product-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-delete {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #2563eb);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(37, 99, 235, 0.28);
+    }
+
+    .btn-secondary {
+      background: #eef2f7;
+      color: var(--secondary);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+      .inline-fields { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="badge">📦 Catálogo web • Productos</span>
+      <h1>Formulario para ingresar productos al catálogo</h1>
+      <p>Completa esta ficha para registrar cada producto que aparecerá en el catálogo web.</p>
+    </section>
+
+    <form id="productForm" class="form-grid">
+      <article class="panel">
+        <h2>Datos del producto</h2>
+        <p class="subtle">Información principal para mostrar el artículo en el catálogo.</p>
+        <div>
+          <div class="field">
+            <label for="nombreProducto">Nombre del producto</label>
+            <input id="nombreProducto" name="nombreProducto" type="text" placeholder="Ej. Pantalón de taekwondo" required />
+          </div>
+
+          <div class="inline-fields">
+            <div class="field">
+              <label for="codigo">Código / SKU</label>
+              <input id="codigo" name="codigo" type="text" placeholder="TKD-001" />
+            </div>
+            <div class="field">
+              <label for="categoria">Categoría</label>
+              <select id="categoria" name="categoria">
+                <option value="">Selecciona</option>
+                <option>Uniformes</option>
+                <option>Accesorios</option>
+                <option>Equipamiento</option>
+                <option>Promociones</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="inline-fields">
+            <div class="field">
+              <label for="precio">Precio</label>
+              <input id="precio" name="precio" type="number" step="0.01" min="0" placeholder="199.99" required />
+            </div>
+            <div class="field">
+              <label for="stock">Stock disponible</label>
+              <input id="stock" name="stock" type="number" min="0" placeholder="10" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="estadoProducto">Estado</label>
+            <select id="estadoProducto" name="estadoProducto">
+              <option>Disponible</option>
+              <option>Próximamente</option>
+              <option>Agotado</option>
+            </select>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Imagen y descripción</h2>
+        <p class="subtle">Agrega la imagen y la descripción que verán en el catálogo.</p>
+        <div>
+          <div class="field">
+            <label for="imagen">URL de imagen</label>
+            <input id="imagen" name="imagen" type="url" placeholder="https://example.com/product.jpg" />
+          </div>
+          <div class="field">
+            <label for="descripcion">Descripción del producto</label>
+            <textarea id="descripcion" name="descripcion" placeholder="Describe material, color, talla, uso o beneficios del producto."></textarea>
+          </div>
+          <div class="field">
+            <label for="observaciones">Observaciones del catálogo</label>
+            <textarea id="observaciones" name="observaciones" placeholder="Notas adicionales para el catálogo o promoción."></textarea>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Detalles de venta</h2>
+        <p class="subtle">Campos extras para organizar y mostrar el producto correctamente.</p>
+        <div>
+          <div class="inline-fields">
+            <div class="field">
+              <label for="marca">Marca</label>
+              <input id="marca" name="marca" type="text" placeholder="Toros Sport" />
+            </div>
+            <div class="field">
+              <label for="talla">Talla / Modelo</label>
+              <input id="talla" name="talla" type="text" placeholder="M / XL / 2026" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="fechaAlta">Fecha de alta</label>
+            <input id="fechaAlta" name="fechaAlta" type="date" />
+          </div>
+          <div class="actions">
+            <button class="btn-primary" type="submit">Guardar producto</button>
+            <button class="btn-secondary" type="reset">Limpiar</button>
+          </div>
+          <p id="statusMessage" class="note">Este formulario está conectado a Supabase para guardar productos en tu catálogo.</p>
+        </div>
+      </article>
+    </form>
+
+    <section class="panel list-panel">
+      <h2>Productos ya registrados</h2>
+      <p class="subtle">Aquí verás los productos disponibles desde Supabase y los que se guardaron localmente mientras la tabla estaba en proceso de creación.</p>
+      <div id="productList" class="product-list"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase/config.js"></script>
+  <script>
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const form = document.getElementById('productForm');
+    const statusMessage = document.getElementById('statusMessage');
+    const productList = document.getElementById('productList');
+    const STORAGE_KEY = 'taekwondo_products_local';
+
+    function setStatus(text, isError = false) {
+      statusMessage.textContent = text;
+      statusMessage.style.color = isError ? '#b91c1c' : '#6b7280';
+    }
+
+    function loadLocalProducts() {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    }
+
+    function saveLocalProduct(product) {
+      const existing = loadLocalProducts();
+      existing.unshift({
+        ...product,
+        id: product.id ?? Date.now(),
+        source: product.source || 'local'
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+    }
+
+    function mergeProducts(remoteProducts = [], localProducts = []) {
+      const seen = new Set();
+      return [...remoteProducts, ...localProducts].filter((product) => {
+        const normalizedSource = product.source || 'remote';
+        const key = `${normalizedSource}:${product.id ?? product.codigo ?? product.nombre_producto ?? Math.random()}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function renderProductList(products) {
+      if (!products.length) {
+        productList.innerHTML = '<article class="product-card">No hay productos guardados todavía.</article>';
+        return;
+      }
+
+      productList.innerHTML = products.map((product) => `
+        <article class="product-card">
+          <strong>${product.nombre_producto || 'Producto sin nombre'}</strong>
+          <div class="product-meta">Código: ${product.codigo || '—'} • Categoría: ${product.categoria || '—'} • Precio: $${Number(product.precio || 0).toFixed(2)}</div>
+          <div class="product-meta">Stock: ${product.stock || 0} • Estado: ${product.estado || 'Disponible'}</div>
+          <div class="product-actions">
+            <button type="button" class="btn-delete" data-action="delete" data-id="${product.id ?? ''}" data-source="${product.source || 'remote'}">Eliminar</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    async function ensureAnonymousSession() {
+      return null;
+    }
+
+    async function refreshProducts() {
+      const localProducts = loadLocalProducts();
+
+      try {
+        await ensureAnonymousSession();
+        const { data, error } = await supabaseClient
+          .from(TABLE_NAME)
+          .select('*')
+          .order('id', { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+
+        renderProductList(mergeProducts(data || [], localProducts));
+        return;
+      } catch (error) {
+        console.warn('No se pudo cargar Supabase, mostrando solo productos locales.', error);
+      }
+
+      renderProductList(localProducts);
+    }
+
+    async function deleteProduct(id, source) {
+      const numericId = Number(id);
+
+      try {
+        const isRemoteRecord = source === 'remote' || source === 'supabase';
+
+        if (isRemoteRecord && Number.isFinite(numericId)) {
+          await ensureAnonymousSession();
+          const { error } = await supabaseClient
+            .from(TABLE_NAME)
+            .delete()
+            .eq('id', numericId);
+
+          if (error) {
+            throw error;
+          }
+        }
+
+        const existing = loadLocalProducts().filter((product) => String(product.id) !== String(id));
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+        setStatus('Producto eliminado correctamente.');
+        await refreshProducts();
+      } catch (error) {
+        console.error(error);
+        setStatus('No se pudo eliminar el producto.', true);
+      }
+    }
+
+    productList.addEventListener('click', async (event) => {
+      const button = event.target.closest('[data-action="delete"]');
+      if (!button) return;
+
+      await deleteProduct(button.dataset.id, button.dataset.source);
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setStatus('Guardando producto en Supabase...');
+
+      const product = {
+        nombre_producto: form.nombreProducto.value.trim(),
+        codigo: form.codigo.value.trim(),
+        categoria: form.categoria.value,
+        precio: Number(form.precio.value),
+        stock: Number(form.stock.value || 0),
+        estado: form.estadoProducto.value,
+        imagen: form.imagen.value.trim(),
+        descripcion: form.descripcion.value.trim(),
+        observaciones: form.observaciones.value.trim(),
+        marca: form.marca.value.trim(),
+        talla: form.talla.value.trim(),
+        fecha_alta: form.fechaAlta.value || null
+      };
+
+      try {
+        await ensureAnonymousSession();
+        const { data, error } = await supabaseClient
+          .from(TABLE_NAME)
+          .insert(product)
+          .select();
+
+        if (error) {
+          throw error;
+        }
+
+        const inserted = data || [];
+        saveLocalProduct({ ...product, ...(inserted[0] || {}), source: 'remote' });
+        setStatus('Producto guardado correctamente en Supabase.');
+        form.reset();
+        await refreshProducts();
+      } catch (error) {
+        console.error(error);
+        saveLocalProduct(product);
+        setStatus('Producto guardado localmente. La tabla de Supabase aún debe crearse en el dashboard.', true);
+        await refreshProducts();
+      }
+    });
+
+    window.__formReady = true;
+    refreshProducts();
+  </script>
+</body>
+</html>

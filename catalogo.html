@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Catálogo de Productos - Taekwondo Toros</title>
+  <style>
+    :root { --primary:#0d6efd; --text:#1f2937; --muted:#6b7280; --card:#fff; --bg:#0f172a; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; background: linear-gradient(135deg,#07111f,#13253b 60%,#0c2741); color:#fff; }
+    .page { max-width: 1200px; margin: 0 auto; padding: 24px 16px 56px; }
+    .hero { background: rgba(255,255,255,0.95); color: var(--text); border-radius: 22px; padding: 20px; box-shadow: 0 16px 32px rgba(0,0,0,0.18); margin-bottom: 18px; }
+    .hero h1 { margin: 0 0 6px; font-size: 1.8rem; }
+    .hero p { color: var(--muted); margin: 0; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+    .card { background: rgba(255,255,255,0.97); color: var(--text); border-radius: 18px; overflow:hidden; box-shadow: 0 14px 32px rgba(0,0,0,0.18); display:flex; flex-direction:column; }
+    .card img { width:100%; height: 180px; object-fit: cover; background:#e5e7eb; }
+    .card-body { padding: 14px; display:grid; gap:8px; }
+    .tag { display:inline-block; width:max-content; border-radius:999px; background:#eff6ff; color:#1d4ed8; font-size:.82rem; font-weight:700; padding:6px 8px; }
+    .price { font-size:1.1rem; font-weight:800; color:#111827; }
+    .muted { color: var(--muted); font-size:.95rem; line-height:1.35; }
+    .btn { display:inline-block; text-decoration:none; background: linear-gradient(135deg, var(--primary), #2563eb); color:#fff; padding:10px 12px; border-radius: 10px; font-weight:700; text-align:center; }
+    .empty { background: rgba(255,255,255,0.95); color: var(--text); border-radius: 16px; padding: 18px; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <h1>Catálogo de productos</h1>
+      <p>Estos productos se cargan desde Supabase y aparecen automáticamente en la vista del catálogo.</p>
+    </section>
+
+    <section id="catalogGrid" class="grid"></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase/config.js"></script>
+  <script>
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const grid = document.getElementById('catalogGrid');
+
+    function loadLocalProducts() {
+      return JSON.parse(localStorage.getItem('taekwondo_products_local') || '[]');
+    }
+
+    async function ensureAnonymousSession() {
+      return null;
+    }
+
+    async function loadProducts() {
+      const localProducts = loadLocalProducts();
+      let products = [...localProducts];
+
+      try {
+        await ensureAnonymousSession();
+        const { data, error } = await supabaseClient
+          .from(TABLE_NAME)
+          .select('*')
+          .order('id', { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+
+        products = [...(data || []), ...products];
+      } catch (error) {
+        console.warn('Supabase unavailable, showing local products only.', error);
+      }
+
+      if (!products.length) {
+        grid.innerHTML = '<article class="empty">No hay productos cargados aún. Agrega uno desde el formulario.</article>';
+        return;
+      }
+
+      grid.innerHTML = products.map(product => `
+          <article class="card">
+            <img src="${product.imagen || 'https://via.placeholder.com/600x400?text=Producto'}" alt="${product.nombre_producto || 'Producto'}" />
+            <div class="card-body">
+              <span class="tag">${product.categoria || 'Sin categoría'}</span>
+              <h2>${product.nombre_producto || product.nombreProducto || 'Producto sin nombre'}</h2>
+              <div class="price">$${Number(product.precio || 0).toFixed(2)}</div>
+              <p class="muted">${product.descripcion || 'Sin descripción.'}</p>
+              <div class="muted">Stock: ${product.stock || 0} • Estado: ${product.estado || 'Disponible'}</div>
+            </div>
+          </article>
+        `).join('');
+    }
+
+    loadProducts();
+    }
+
+    loadProducts();
+  </script>
+</body>
+</html>
